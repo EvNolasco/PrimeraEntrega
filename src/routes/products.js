@@ -23,7 +23,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:pid', (req, res) => {
-    const updatedProduct = productManager.updateProduct(parseInt(req.params.pid));
+    const updatedProduct = productManager.updateProduct(parseInt(req.params.pid), req.body);
     if (updatedProduct) {
         res.json(updatedProduct);
     } else {
