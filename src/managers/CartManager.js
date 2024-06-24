@@ -36,6 +36,21 @@ class CartManager {
         return this.carts.find(cart => cart.id === id);
     }
 
+    addProductToCart(cid, pid) {
+        const cart = this.getCartById(cid);
+        if (cart) {
+            const productIndex = cart.products.findIndex(p => p.product === pid);
+            if (productIndex !== -1) {
+                cart.products[productIndex].quantity += 1;
+            } else {
+                cart.products.push({ product: pid, quantity: 1 });
+            }
+            this.saveCarts();
+            return cart;
+        }
+        return null;
+    }
+
     updateCart(id, updatedCart) {
         const index = this.carts.findIndex(cart => cart.id === id);
         if (index !== -1) {
