@@ -22,16 +22,11 @@ class ProductManager {
         fs.writeFileSync(path, data, 'utf-8');
     }
 
-    addProduct(title, description, price, status, stock, category, thumbnail) {
+    addProduct(productData) {
         const newProduct = {
             id: this.products.length + 1,
-            title,
-            description,
-            price,
-            status,
-            stock,
-            category,
-            thumbnail
+            ...productData,
+            status: productData.status !== undefined ? productData.status : true
         };
         this.products.push(newProduct);
         this.saveProducts();
@@ -49,7 +44,7 @@ class ProductManager {
     updateProduct(id, updatedProduct) {
         const index = this.products.findIndex(product => product.id === id);
         if (index !== -1) {
-            this.products[index] = { ...this.products[index], ...updatedProduct };
+            this.products[index] = { ...this.products[index], ...updatedProduct, id: this.products[index].id };
             this.saveProducts();
             return this.products[index];
         }
@@ -69,3 +64,4 @@ class ProductManager {
 }
 
 export default ProductManager;
+
